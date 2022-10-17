@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+    webserv:
+        container_name: web
+        image: nginx:latest
+        build:
+            context: ./webserv
+            dockerfile: Dockerfile
+        depends_on:
+            - rserv
+        volumes:
+            - ./glenlake-elections/graphs/:/var/www/html/
+        ports:
+            - 5000:80
+    rserv:
+        container_name: r
+        image: r-base
+        restart: always
+        volumes: 
+            - ./glenlake-elections:/home/docker/glenlake-elections/
